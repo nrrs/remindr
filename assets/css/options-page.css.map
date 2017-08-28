@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,UAAW;EACP,OAAO,EAAE,QAAQ;;ACDrB,IAAK;EACD,UAAU,ECAH,OAAO",
+"sources": ["../sass/_core.scss","../sass/_options.scss","../sass/_vars.scss"],
+"names": [],
+"file": "options-page.css"
+}
