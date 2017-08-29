@@ -1,9 +1,15 @@
 import React from 'react';
 
-const App = () => (
-  <div className="App"> 
-    <h1> Remindr111 </h1>
-  </div>
-);
+import List from './list';
+import Add from './add';
+
+const App = () => {
+  return(
+    <div className="App">
+      <Add />
+      <List />
+    </div>
+  );
+};
 
 export default App;

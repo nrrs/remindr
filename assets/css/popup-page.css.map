@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,UAAW;EACP,OAAO,EAAE,QAAQ;;ACDrB,IAAK;EACD,KAAK,EAAE,KAAK",
+"sources": ["../sass/_core.scss","../sass/_popup.scss"],
+"names": [],
+"file": "popup-page.css"
+}
