@@ -1,4 +1,6 @@
 import React from 'react';
+import moment from 'moment';
+
 import ListItem from './ListItem';
 
 class List extends React.Component {
@@ -11,14 +13,14 @@ class List extends React.Component {
                     id: 1,
                     alert: 'Drink water!',
                     reoccur: true,
-                    frequency: 'every 3 hours',
+                    frequency: 'Every 3 Hours',
                     onDate: false
                 },
                 {
                     id: 2,
                     alert: 'Rest your eyes for 5 mins!',
                     reoccur: true,
-                    frequency: 'every 1 hour',
+                    frequency: 'Every Hour',
                     onDate: false
                 },
                 {
@@ -26,7 +28,7 @@ class List extends React.Component {
                     alert: 'Commit!',
                     reoccur: false,
                     frequency: null,
-                    onDate: Date.now() + 1
+                    onDate: moment(Date.now()).format("MMM Do YY")
                 }
             ]
         };

@@ -24,7 +24,13 @@ ul#reminders {
     border-top: 1px solid #e6e6e6; }
     ul#reminders li:hover {
       background: #F0F0F0; }
-    ul#reminders li .fa {
+    ul#reminders li .options {
       float: right; }
+    ul#reminders li .fa {
+      color: #ccc;
+      margin-left: 15px; }
+      ul#reminders li .fa:hover {
+        color: #aaa;
+        cursor: pointer; }
 
 /*# sourceMappingURL=popup-page.css.map */

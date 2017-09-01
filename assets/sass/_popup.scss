@@ -12,8 +12,16 @@ ul#reminders {
         &:hover {
             background: $bg-hover;
         }
-        .fa {
+        .options {
             float: right;
+        }
+        .fa {
+            color: #ccc;
+            margin-left: $var;
+            &:hover {
+                color: #aaa;
+                cursor: pointer;
+            }
         }
     }
 }
