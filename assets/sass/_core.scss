@@ -1,3 +1,16 @@
+body {
+    font-size: $font-size;
+    background: $bg-color;
+}
+
 .container {
     padding: 0px $var;
+}
+
+input {
+    padding: $var;
+    border: 0px;
+    width: 100%;
+    outline: none;
+    background: #fff;
 }
