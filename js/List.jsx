@@ -3,9 +3,13 @@ import moment from 'moment';
 
 import ListItem from './ListItem';
 
+
 class List extends React.Component {
     constructor(props) {
         super(props);
+        
+        console.log(chrome.storage);
+
         this.state = {
             title: "",
             reminders: [

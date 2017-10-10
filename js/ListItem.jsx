@@ -24,6 +24,7 @@ class ListItem extends React.Component {
                 title={frequency}
                 onClick={() => this._show(frequency)}></i> :
             null;
+            
         const renderOnDate = (onDate) ?
             <i className="fa fa-calendar-check-o"
                 aria-hidden="true"
