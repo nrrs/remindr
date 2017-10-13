@@ -13,33 +13,41 @@ class Add extends Component {
             }
         };
 
-        this._handleSubmit = this._handleSubmit.bind(this);
-        this._handleChange = this._handleChange.bind(this);
+        this._submit = this._submit.bind(this);
+        this._update = this._update.bind(this);
     }
 
-    _handleChange(id) {
-        console.log(event);
-        return (e) => {
-            this.setState({
-              reminder: {
-                [id]: e.currentTarget.value
-              }
-            });
-
-            console.log(this.state.reminder.alert);
-        };
-        
+    _update(field) {
+        return e => this.setState({
+            reminder: { [field]: e.currentTarget.value }
+        });
     }
 
-    _handleSubmit(e) {
+    _submit() {
         var reminder = this.state.reminder;
 
+        chrome.storage.local.get('reminders', obj => {
+          let store = obj;
+
+          if (store.hasOwnProperty("reminders")) {
+            console.log("store exists");
+            console.log(store.reminders);
+            store.reminders.push(reminder);
+            console.log('store: ', store);
+
+            chrome.storage.local.set({'reminders': store.reminders}, function() {
+              console.log("chrome.storage.sync.set");
+            //   alert(`Reminder ${reminder.alert}  Set`);
+            });
+
+          }
+
+
+        });
+        
         console.log(reminder);
 
-        chrome.storage.local.set(reminder, function() {
-            console.log('chrome.storage.sync.set');
-            alert(`Reminder ${reminder.alert}  Set`);
-        });
+        
     }
 
     render() {
@@ -48,9 +56,9 @@ class Add extends Component {
                 <input id="alert" 
                     type="text" 
                     placeholder="How may I help you?" 
-                    onChange={this._handleChange('alert')}
+                    onChange={this._update('alert')}
                     />
-                <button onClick={this._handleSubmit}>submit</button>
+                <button onClick={this._submit}>submit</button>
             </div>
         );
     }
