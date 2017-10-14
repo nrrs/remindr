@@ -1,67 +1,85 @@
 import React, { Component } from 'react';
+import List from "./list";
+import ListItem from "./ListItem";
 
 class Add extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            reminder: {
-                alert: '',
-                reoccur: true,
-                frequency: 'Every 3 Hours',
-                onDate: false
-            }
-        };
+    this.remindersArray = [];
 
-        this._submit = this._submit.bind(this);
-        this._update = this._update.bind(this);
-    }
+    this.state = {
+      reminder: {
+        alert: "fake",
+        reoccur: true,
+        frequency: "Every 3 Hours",
+        onDate: false
+      },
+      reminders: this.remindersArray
+    };
 
-    _update(field) {
-        return e => this.setState({
-            reminder: { [field]: e.currentTarget.value }
-        });
-    }
+    this._submit = this._submit.bind(this);
+    this._update = this._update.bind(this);
+  }
 
-    _submit() {
-        var reminder = this.state.reminder;
+  componentWillMount() {
+    chrome.storage.local.get({ reminders: [] }, results => {
+      console.log("CWMOUNT Reminders List: ", results);
+      this.remindersArray = results.reminders;
 
-        chrome.storage.local.get('reminders', obj => {
-          let store = obj;
+      this.setState({
+        reminders: this.remindersArray
+      });
+    });
+  }
 
-          if (store.hasOwnProperty("reminders")) {
-            console.log("store exists");
-            console.log(store.reminders);
-            store.reminders.push(reminder);
-            console.log('store: ', store);
+  componentWillUpdate() {
+    chrome.storage.local.get({ reminders: [] }, results => {
+      console.log("CWUPDATE Reminders List: ", results);
+      this.remindersArray = results.reminders;
+    });
+  }
 
-            chrome.storage.local.set({'reminders': store.reminders}, function() {
-              console.log("chrome.storage.sync.set");
-            //   alert(`Reminder ${reminder.alert}  Set`);
-            });
+  _update(field) {
+    return e =>
+      this.setState({
+        reminder: { [field]: e.currentTarget.value }
+      });
+  }
 
-          }
+  _submit() {
+    const reminder = this.state.reminder;
 
+    this.remindersArray.push(reminder);
 
-        });
-        
-        console.log(reminder);
+    chrome.storage.local.set({ reminders: this.remindersArray }, () => {
+      console.log("chrome.storage.sync.set");
+    });
 
-        
-    }
+    chrome.storage.local.get({ reminders: [] }, results => {
+      console.log("Post Submit Reminders: ", results);
+      this.setState({ reminders: results.reminders });
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                <input id="alert" 
-                    type="text" 
-                    placeholder="How may I help you?" 
-                    onChange={this._update('alert')}
-                    />
-                <button onClick={this._submit}>submit</button>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <input
+          id="alert"
+          type="text"
+          placeholder="How may I help you?"
+          onChange={this._update("alert")}
+        />
+        <button onClick={this._submit}>submit</button>
+        <ul id="reminders">
+          {this.remindersArray.map((el, i) => <ListItem key={i} reminder={el} />)}
+          {/* { this.state.reminders.map((el, i) => <ListItem key={i} reminder={el} />) } */}
+        </ul>
+        {/* <List data={this.state.reminders} /> */}
+      </div>
+    );
+  }
 }
 
 export default Add;
