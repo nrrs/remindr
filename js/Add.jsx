@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListItem from "./ListItem";
+import List from "./List";
 
 class Add extends Component {
   constructor(props) {
@@ -17,13 +18,14 @@ class Add extends Component {
       reminders: this.remindersArray
     };
 
-    this._submit = this._submit.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
     this._update = this._update.bind(this);
+    this._toggle = this._toggle.bind(this);
   }
 
   componentWillMount() {
     chrome.storage.local.get({ reminders: [] }, results => {
-      console.log("On Mount Reminders List: ", results);
+    //   console.log("On Mount Reminders List: ", results);
       this.remindersArray = results.reminders;
 
       this.setState({
@@ -32,41 +34,60 @@ class Add extends Component {
     });
   }
 
-  _update(field) {
-    return e =>
-      this.setState({
-        reminder: { [field]: e.currentTarget.value }
-      });
-  }
+    _update(field) {
+        // console.log('update');
+        return (e => {
+            this.setState({
+                reminder: { [field]: e.currentTarget.value }
+            });
+        });
+    }
 
-  _submit() {
-    const reminder = this.state.reminder;
+    _toggle(field) {
+        // document.getElementById(field).classList.add("fart");
+        return (e => {
+            if (!e) e = window.event;
+            
+            var keyCode = e.keyCode || e.which;
+            
+            if (keyCode == "13") {
+              // Enter pressed
+              this._handleSubmit();
+            }
+        });
+    }
 
-    this.remindersArray.push(reminder);
+    _handleSubmit() {
+        console.log('submit');
+        const reminder = this.state.reminder;
 
-    chrome.storage.local.set({ reminders: this.remindersArray }, () => {
-      console.log("chrome.storage.sync.set");
-    });
+        this.remindersArray.push(reminder);
 
-    chrome.storage.local.get({ reminders: [] }, results => {
-      console.log("Post Submit Reminders: ", results);
-      this.setState({ reminders: results.reminders });
-    });
-  }
+        chrome.storage.local.set({ reminders: this.remindersArray }, () => {
+            console.log("chrome.storage.sync.set");
+        });
+
+        chrome.storage.local.get({ reminders: [] }, results => {
+            console.log("Post Submit Reminders: ", results);
+            this.setState({ reminders: results.reminders });
+        });
+    }
 
   render() {
+      const { reminders } = this.state;
+    //   console.log(reminders);
     return (
       <div>
-        <input
-          id="alert"
-          type="text"
-          placeholder="How may I help you?"
-          onChange={this._update("alert")}
-        />
-        <button onClick={this._submit}>submit</button>
-        <ul id="reminders">
-          {this.remindersArray.map((el, i) => <ListItem key={i} reminder={el} />)}
-        </ul>
+        <form onSubmit={this._handleSubmit}>
+            <input
+                id="alert"
+                type="text"
+                placeholder="How may I help you?"
+                onChange={this._update("alert")}
+                onKeyPress={this._toggle("alert")}
+            />
+        </form>
+        <List data={reminders} />
       </div>
     );
   }
