@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import List from "./list";
 import ListItem from "./ListItem";
 
 class Add extends Component {
@@ -24,19 +23,12 @@ class Add extends Component {
 
   componentWillMount() {
     chrome.storage.local.get({ reminders: [] }, results => {
-      console.log("CWMOUNT Reminders List: ", results);
+      console.log("On Mount Reminders List: ", results);
       this.remindersArray = results.reminders;
 
       this.setState({
         reminders: this.remindersArray
       });
-    });
-  }
-
-  componentWillUpdate() {
-    chrome.storage.local.get({ reminders: [] }, results => {
-      console.log("CWUPDATE Reminders List: ", results);
-      this.remindersArray = results.reminders;
     });
   }
 
@@ -74,9 +66,7 @@ class Add extends Component {
         <button onClick={this._submit}>submit</button>
         <ul id="reminders">
           {this.remindersArray.map((el, i) => <ListItem key={i} reminder={el} />)}
-          {/* { this.state.reminders.map((el, i) => <ListItem key={i} reminder={el} />) } */}
         </ul>
-        {/* <List data={this.state.reminders} /> */}
       </div>
     );
   }
