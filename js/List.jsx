@@ -11,7 +11,7 @@ class List extends React.Component {
 
         return (
             <ul id="reminders">
-                { data.map((el, i) => <ListItem key={i} reminder={el} />)}
+                { data.map((el, i) => <ListItem key={i} reminder={el} id={`reminder-item-${i+1}`} />)}
             </ul>
         );
     }
