@@ -7,7 +7,7 @@ class ListItem extends React.Component {
             message: ""
         };
         this._show = this._show.bind(this);
-        // this._remove = this._remove.bind(this);
+        this._remove = this._remove.bind(this);
     }
     
     _show(message) {
@@ -16,7 +16,7 @@ class ListItem extends React.Component {
     }
 
     _remove(id) {
-        console.log(id);
+        console.log('remove: ', id);
 
         chrome.storage.local.get('reminders', result => {
             var reminders = result.reminders,
@@ -57,8 +57,8 @@ class ListItem extends React.Component {
 
         return (
             <li id={id}>
-                <span className="alert">Alert: {alert}</span> | 
-                <span className="alert">Last: {last}</span>
+                <span className="alert">{alert}</span>
+                {/* <span className="alert">Last: {last}</span> */}
                 <div className="options">
                     {message}
                     {renderOccur}

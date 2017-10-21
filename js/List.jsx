@@ -8,10 +8,10 @@ class List extends React.Component {
 
     render() {
         const { data } = this.props;
-
+        
         return (
             <ul id="reminders">
-                { data.map((el, i) => <ListItem key={i} reminder={el} id={`reminder-item-${i+1}`} />)}
+                { data.map((el, i) => <ListItem key={i} reminder={el} id={`${i+1}`} />)}
             </ul>
         );
     }
