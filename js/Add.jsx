@@ -3,26 +3,20 @@ import React, { Component } from 'react';
 class Add extends Component {
   constructor(props) {
     super(props);
-
-    this.remindersArray = [];
-
     this.state = {
       reminder: {
         alert: '',
-        last: '',
         reoccur: true,
         frequency: "Every 3 Hours",
         onDate: false
-      }
+      },
+      currentInput: 'alert'
     };
-
-    // this._handleSubmit = this._handleSubmit.bind(this);
-    
-    this._update = this._update.bind(this);
-    this._toggle = this._toggle.bind(this);
+    this.update = this.update.bind(this);
+    this.submit = this.submit.bind(this);
   }
 
-    _update(field) {
+    update(field) {
         return (e => {
             const reminder = this.state.reminder;
 
@@ -31,8 +25,7 @@ class Add extends Component {
         });
     }
 
-    _toggle(field) {
-        // document.getElementById(field).classList.add("fart");
+    submit(field) {
         return ((e) => {
             if (!e) e = window.event;
             
@@ -49,6 +42,7 @@ class Add extends Component {
                   onDate: false
                 }
               });
+              
 
               // this._handleSubmit();
             } else if (keyCode == "13") {
@@ -60,9 +54,8 @@ class Add extends Component {
         });
     }
 
-
   render() {
-    const { reminders } = this.state;
+    const { alert } = this.state.reminder;
 
     return (
       <div>
@@ -70,16 +63,16 @@ class Add extends Component {
               id="alert"
               type="text"
               placeholder="How may I help you?"
-              onChange={this._update("alert")}
-              onKeyPress={this._toggle("alert")}
-              // onKeyPress={() => this.props.addReminder({alert:'norris'})}
+              value={alert}
+              onChange={this.update("alert")}
+              onKeyPress={this.submit("alert")}
           />
           {/* <input
               id="last"
               type="text"
               placeholder="How may I help you?"
-              onChange={this._update("last")}
-              onKeyPress={this._toggle("last")}
+              onChange={this.update("last")}
+              onKeyPress={this.submit("last")}
           /> */}
       </div>
     );

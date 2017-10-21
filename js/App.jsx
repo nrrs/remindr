@@ -8,8 +8,8 @@ class App extends Component {
     this.state = {
       reminders: []
     };
-
     this.addReminder = this.addReminder.bind(this);
+    this.removeReminder = this.removeReminder.bind(this);
   }
 
   componentWillMount() {
@@ -21,22 +21,17 @@ class App extends Component {
   }
 
   addReminder(reminder) {
-    console.log('addReminder arg: ', reminder);
     let oldReminders = this.state.reminders;
-    console.log(oldReminders);
+
     oldReminders.push(reminder);
-    console.log(oldReminders);
+    this.setState({ reminders: oldReminders });
 
-    this.setState({
-      reminders: oldReminders
-    });
-
-    chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.sync.set"));
+    chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.local.set"));
   }
 
-  // componentWillUnmount() {
-  //   chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.sync.set"));
-  // }
+  removeReminder() {
+    console.log('removed');
+  }
 
   render() {
     const { reminders } = this.state;
@@ -44,7 +39,7 @@ class App extends Component {
     return (
       <div className="App">
         <Add addReminder={this.addReminder} />
-        <List data={reminders} />
+        <List data={reminders} removeReminder={this.removeReminder} />
       </div>
     );
   }

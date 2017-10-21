@@ -7,12 +7,18 @@ class ListItem extends React.Component {
             message: ""
         };
         this._show = this._show.bind(this);
+        this._hide = this._hide.bind(this);
         this._remove = this._remove.bind(this);
     }
     
     _show(message) {
         this.setState({ message });
-        setTimeout(() => this.setState({ message: "" }), 750);
+        // setTimeout(() => this.setState({ message: "" }), 750);
+        // setTimeout(() => this.setState({ message: "" }), 750);
+    }
+
+    _hide(message) {
+        this.setState({ message: "" });
     }
 
     _remove(id) {
@@ -30,34 +36,36 @@ class ListItem extends React.Component {
 
     render() {
         const { id } = this.props;
-        const { alert, last, reoccur, frequency, onDate } = this.props.reminder;
+        const { alert, reoccur, frequency, onDate } = this.props.reminder;
         const { message } = this.state;
 
         const renderOccur = (reoccur) ?
             <i className="fa fa-clock-o"
                 aria-hidden="true"
                 title={frequency}
-                onClick={() => this._show(frequency)}></i> :
+                onMouseOver={() => this._show(frequency)}
+                onMouseLeave={() => this._hide(frequency)}></i> :
             null;
             
         const renderOnDate = (onDate) ?
             <i className="fa fa-calendar-check-o"
                 aria-hidden="true"
                 title={onDate}
-                onClick={() => this._show(onDate)}></i> :
+                onMouseOver={this._show(onDate)}></i> :
             null;
 
         const renderRemove = (id) ? 
             <i className="fa fa-times" 
                 aria-hidden="true" 
                 title="Remove" 
-                onClick={() => this._remove(id)}></i> :
+                // onClick={() => this._remove(id)}>
+                onClick={this.props.remove}></i> :
             null;
 
 
         return (
             <li id={id}>
-                <span className="alert">{alert}</span>
+                <span className="alert">{alert}, {`reoccur: ${reoccur}`}, {frequency}, {onDate}</span>
                 {/* <span className="alert">Last: {last}</span> */}
                 <div className="options">
                     {message}

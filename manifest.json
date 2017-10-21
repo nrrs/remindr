@@ -3,25 +3,33 @@
     "name": "Remindr",
     "version": "1.0",
     "description": "Remindr is a Chrome Extension aimed to provide users with custom reminders.",
-    "author": "Norris Kwan and Justin Austria",
+    "author": "Norris Kwan",
     // "icons": {
     //     "16": "favicon.png"
     // },
-
-    "browser_action": {
-        // "default_icon": "icon-remindr.png",
-        "default_popup": "popup.html"
-    },
-
-    "options_page": "options.html",
-
-    "content_scripts": [{
-        "js": ["remindr.jsx"],
-        // "js": ["js/jquery-1.11.2.min.js", "js/script.js", "js/options.js"],
-        "matches": ["http://*/*", "https://*/*"]
-    }],
-    "permissions": [
-        "storage"
-    ]
-
+    "permissions": ["storage", "alarms"],
+    "app": {
+        "background": {
+            "scripts": [
+                "eventPage.js"
+            ],
+            "persistent": true
+        },
+        "browser_action": {
+            // "default_icon": "icon-remindr.png",
+            "default_popup": "popup.html"
+        },
+        "options_page": "options.html",
+        "content_scripts": [
+            {
+                "js": [
+                    "remindr.jsx"
+                ],
+                "matches": [
+                    "http://*/*",
+                    "https://*/*"
+                ]
+            }
+        ]
+    }
 }

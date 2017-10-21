@@ -30,7 +30,6 @@ ul#reminders {
       color: #ccc;
       margin-left: 15px; }
       ul#reminders li .fa:hover {
-        color: #aaa;
-        cursor: pointer; }
+        color: #aaa; }
 
 /*# sourceMappingURL=popup-page.css.map */
