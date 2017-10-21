@@ -16,10 +16,10 @@ ul#reminders {
             float: right;
         }
         .fa {
-            color: #ccc;
+            color: $icon;
             margin-left: $var;
             &:hover {
-                color: #aaa;
+                color: $icon-hover;
             }
         }
     }

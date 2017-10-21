@@ -1,0 +1,20 @@
+/* line 1, ../sass/_core.scss */
+body {
+  font-size: 17px;
+  background: #fafafa;
+}
+
+/* line 6, ../sass/_core.scss */
+.container {
+  padding: 0px 15px;
+}
+
+/* line 10, ../sass/_core.scss */
+input {
+  padding: 15px;
+  border: 0px;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+  background: #fff;
+}

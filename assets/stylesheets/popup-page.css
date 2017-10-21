@@ -1,0 +1,54 @@
+/* line 1, ../sass/_core.scss */
+body {
+  font-size: 17px;
+  background: #fafafa;
+}
+
+/* line 6, ../sass/_core.scss */
+.container {
+  padding: 0px 15px;
+}
+
+/* line 10, ../sass/_core.scss */
+input {
+  padding: 15px;
+  border: 0px;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* line 1, ../sass/_popup.scss */
+#pop {
+  width: 600px;
+}
+
+/* line 5, ../sass/_popup.scss */
+ul#reminders {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* line 9, ../sass/_popup.scss */
+ul#reminders li {
+  padding: 15px;
+  border-top: 1px solid #e6e6e6;
+}
+/* line 12, ../sass/_popup.scss */
+ul#reminders li:hover {
+  background: #F0F0F0;
+}
+/* line 15, ../sass/_popup.scss */
+ul#reminders li .options {
+  float: right;
+}
+/* line 18, ../sass/_popup.scss */
+ul#reminders li .fa {
+  color: #ccc;
+  margin-left: 15px;
+}
+/* line 21, ../sass/_popup.scss */
+ul#reminders li .fa:hover {
+  color: #aaa;
+}

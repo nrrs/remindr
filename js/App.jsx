@@ -29,15 +29,22 @@ class App extends Component {
     chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.local.set"));
   }
 
-  removeReminder() {
-    console.log('removed');
+  removeReminder(id) {
+    console.log("remove: ", id);
+    let idx = id - 1,
+        reminders = this.state.reminders;
+    
+    reminders.splice(idx, 1);
+
+    this.setState({ reminders });
+    chrome.storage.local.set({ reminders }, console.log("chrome.storage.sync.set remove"));
   }
 
   render() {
     const { reminders } = this.state;
 
     return (
-      <div className="App">
+      <div className="app">
         <Add addReminder={this.addReminder} />
         <List data={reminders} removeReminder={this.removeReminder} />
       </div>

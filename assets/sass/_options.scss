@@ -1,3 +1,56 @@
-body {
-    background: $bg-color;
+body#options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#root {
+    border: 1px solid $border;
+    min-width: 600px;
+    box-shadow: long-shadow(
+        $direction: to right bottom,
+        $length: 1000px,
+        $color: #f0f0f0
+    );
+}
+
+h1.title {
+    font-weight: normal;
+    font-variant-caps: all-small-caps;
+}
+
+div#add {
+    border-bottom: 1px solid $border;
+}
+
+
+ul#reminders {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 600px;
+    overflow: scroll;
+    li {
+        padding: $var;
+        border-bottom: 1px solid $border;
+        &:first-child {}
+        &:hover {
+            background: $bg-hover;
+        }
+        .options {
+            float: right;
+        }
+        .fa {
+            color: $icon;
+            margin-left: $var;
+            &:hover {
+                color: $icon-hover;
+                cursor: pointer;
+            }
+        }
+    }
 }

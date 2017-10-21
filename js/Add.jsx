@@ -58,7 +58,7 @@ class Add extends Component {
     const { alert } = this.state.reminder;
 
     return (
-      <div>
+      <div id="add">
           <input
               id="alert"
               type="text"
