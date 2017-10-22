@@ -10,11 +10,55 @@ body {
 }
 
 /* line 10, ../sass/_core.scss */
-input {
+input,
+label,
+button.submit {
   padding: 15px;
   border: 0px;
   width: 100%;
   outline: none;
   box-sizing: border-box;
   background: #fff;
+  height: 50px;
+}
+
+/* line 21, ../sass/_core.scss */
+input[type=checkbox], input[type=radio] {
+  width: 30px;
+}
+
+/* line 24, ../sass/_core.scss */
+.label-container {
+  display: flex;
+}
+/* line 26, ../sass/_core.scss */
+.label-container label {
+  flex: 1;
+  color: #8e8e8e;
+}
+/* line 30, ../sass/_core.scss */
+.label-container > input, .label-container > div {
+  flex: 4;
+}
+/* line 34, ../sass/_core.scss */
+.label-container div {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  justify-content: flex-start;
+}
+/* line 39, ../sass/_core.scss */
+.label-container div span {
+  margin-right: 30px;
+}
+
+/* line 44, ../sass/_core.scss */
+button.submit {
+  text-align: left;
+  color: #8e8e8e;
+}
+
+/* line 49, ../sass/_core.scss */
+small {
+  font-size: smaller;
 }

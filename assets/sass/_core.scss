@@ -7,11 +7,45 @@ body {
     padding: 0px $var;
 }
 
-input {
+input,
+label,
+button.submit {
     padding: $var;
     border: 0px;
     width: 100%;
     outline: none;
     box-sizing: border-box;
     background: #fff;
+    height: 50px;
+}
+input[type=checkbox], input[type=radio] {
+    width: $var*2;
+}
+.label-container {
+    display: flex;
+    label {
+        flex: 1;
+        color: $placeholder;
+    }
+    &>input,
+    &>div {
+        flex: 4;
+    }
+    div {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        justify-content: flex-start;
+        span {
+            margin-right: $var*2;
+        }
+    }
+}
+button.submit {
+    text-align: left;
+    color: $placeholder;
+}
+
+small {
+    font-size: smaller;
 }

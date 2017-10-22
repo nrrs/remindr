@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 
+Date.prototype.toDateInputValue = function() {
+  var local = new Date(this);
+  local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+  return local.toJSON().slice(0, 10);
+};
+
 class Add extends Component {
   constructor(props) {
     super(props);
     this.state = {
       reminder: {
         alert: '',
-        reoccur: true,
-        frequency: "Every 3 Hours",
-        onDate: false
+        // when: new Date().toDateInputValue(),
+        // when: Date.now(),
+        when: '',
+        frequency: ''
       },
       currentInput: 'alert'
     };
@@ -16,64 +23,84 @@ class Add extends Component {
     this.submit = this.submit.bind(this);
   }
 
-    update(field) {
-        return (e => {
-            const reminder = this.state.reminder;
+  update(field) {
+      return (e => {
+          const reminder = this.state.reminder;
 
-            reminder[field] = e.currentTarget.value;
-            this.setState({ reminder });
-        });
-    }
+          reminder[field] = e.currentTarget.value;
+          this.setState({ reminder });
+      });
+  }
 
-    submit(field) {
-        return ((e) => {
-            if (!e) e = window.event;
-            
-            var keyCode = e.keyCode || e.which;
-            
-            if (keyCode == "13" && field !== 'last' ) { // on Enter key press
+  submit(field) {
+    return ((e) => {
+        if (!e) e = window.event;
+        
+        const keyCode = e.keyCode || e.which;
+
+        if (keyCode == 13) {
+          switch (field) {
+            case "alert":
+              this.setState({ currentInput: "when" });
+              break;
+            case "when":
+              this.setState({ currentInput: "frequency" });
+              break;
+            case "frequency":
+              this.setState({ currentInput: "submit" });
+              break;
+            case "submit":
               this.props.addReminder(this.state.reminder); // update App state
               this.setState({ // reset this.state.reminder
                 reminder: {
                   alert: '',
-                  last: '',
-                  reoccur: true,
-                  frequency: "Every 3 Hours",
-                  onDate: false
-                }
+                  when: '',
+                  frequency: ''
+                },
+                currentInput: 'alert'
               });
-              
-
-              // this._handleSubmit();
-            } else if (keyCode == "13") {
-                console.log('next input', field);
-                document.getElementById(field).classList.add('hi');
-            } else {
-                return;
-            }
-        });
+              break;
+          }
+        }
+      }
+    );
+  }
+  
+  renderInput() {
+    const { alert, when, frequency } = this.state.reminder;
+    
+    switch (this.state.currentInput) {
+      case "alert":
+        return <input id="alert" type="text" placeholder="Remind me to..." value={alert} onChange={this.update("alert")} onKeyPress={this.submit("alert")} autoFocus />;
+      case "when":
+        return <div className="label-container">
+            <label>When?</label>
+            <input id="when" type="datetime-local" value={when} onChange={this.update("when")} onKeyPress={this.submit("when")} autoFocus/>
+          </div>;
+      case "frequency":
+        return <div className="label-container">
+            <label>How often?</label>
+            <div onKeyPress={this.submit("frequency")}>
+              <input type="radio" name="frequency" value="hourly" defaultChecked />
+              <span>
+                Every <input id="frequency" type="number" placeholder="0" min="0" max="9" value={frequency} onChange={this.update("frequency")} onKeyPress={this.submit("frequency")} autoFocus /> hours.
+              </span>
+              <input type="radio" name="frequency" value="daily" />Daily
+            </div>
+          </div>;
+      case "submit":
+        return <button className="submit" onKeyPress={this.submit("submit")} autoFocus>
+            Gotcha! Press enter to confirm!
+          </button>;
     }
+  }
 
   render() {
     const { alert } = this.state.reminder;
 
     return (
       <div id="add">
-          <input
-              id="alert"
-              type="text"
-              placeholder="How may I help you?"
-              value={alert}
-              onChange={this.update("alert")}
-              onKeyPress={this.submit("alert")}
-          />
-          {/* <input
-              id="last"
-              type="text"
-              placeholder="How may I help you?"
-              onChange={this.update("last")}
-              onKeyPress={this.submit("last")}
-          /> */}
+          {this.renderInput()}
       </div>
     );
   }

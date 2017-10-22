@@ -7,7 +7,7 @@
     // "icons": {
     //     "16": "favicon.png"
     // },
-    "permissions": ["storage", "alarms"],
+    "permissions": ["storage", "alarms", "tabs"],
     "background": {
         "scripts": [
             // "background.js"
@@ -22,9 +22,7 @@
     "options_page": "options.html",
     "content_scripts": [
         {
-            "js": [
-                "remindr.jsx"
-            ],
+            "js": ["remindr.jsx"],
             "matches": [
                 "http://*/*",
                 "https://*/*"

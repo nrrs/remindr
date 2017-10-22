@@ -1,4 +1,4 @@
-body#options {
+#options {
     position: absolute;
     top: 0;
     right: 0;
@@ -10,25 +10,36 @@ body#options {
 }
 #root {
     border: 1px solid $border;
-    min-width: 600px;
+    min-width: 400px;
+    max-width: 600px;
+    width: 100%;
+    margin: $var;
+    box-sizing: border-box;
     box-shadow: long-shadow(
         $direction: to right bottom,
         $length: 1000px,
         $color: #f0f0f0
     );
 }
-
-h1.title {
+h1 {
     font-weight: normal;
     font-variant-caps: all-small-caps;
+    strong {
+        color: #999;
+    }
 }
-
-div#add {
+#really {
+    display: none;
+}
+#add {
     border-bottom: 1px solid $border;
 }
-
-
-ul#reminders {
+input#frequency {
+    padding: 0px;
+    width: $var*2;
+    text-align: center;
+}
+#reminders {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -37,7 +48,9 @@ ul#reminders {
     li {
         padding: $var;
         border-bottom: 1px solid $border;
-        &:first-child {}
+        &:last-child { 
+            border-bottom: 0px;
+        }
         &:hover {
             background: $bg-hover;
         }
@@ -52,5 +65,39 @@ ul#reminders {
                 cursor: pointer;
             }
         }
+    }
+}
+#credit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: $var/2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    a {
+        padding: 5px;
+        color: $icon;
+        &:hover {
+            color: $icon-hover;
+        }
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    #title {
+        strong {
+            display: block;
+        }
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #really {
+        display: block;
+    }
+    #title,
+    #root {
+        display: none;
     }
 }

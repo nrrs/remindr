@@ -42,15 +42,13 @@ class ListItem extends React.Component {
             <i className="fa fa-times" 
                 aria-hidden="true" 
                 title="Remove" 
-                // onClick={() => this._remove(id)}>
                 onClick={() => this.props.remove(id)}></i> :
             null;
 
 
         return (
             <li id={id}>
-                <span className="alert">{alert}, {`reoccur: ${reoccur}`}, {frequency}, {onDate}</span>
-                {/* <span className="alert">Last: {last}</span> */}
+                <span className="alert">{alert}</span>
                 <div className="options">
                     {message}
                     {renderOccur}

@@ -21,11 +21,10 @@ class App extends Component {
   }
 
   addReminder(reminder) {
-    let oldReminders = this.state.reminders;
+    let reminders = this.state.reminders;
 
-    oldReminders.push(reminder);
-    this.setState({ reminders: oldReminders });
-
+    reminders.push(reminder);
+    this.setState({ reminders: reminders });
     chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.local.set"));
   }
 
@@ -33,11 +32,9 @@ class App extends Component {
     console.log("remove: ", id);
     let idx = id - 1,
         reminders = this.state.reminders;
-    
     reminders.splice(idx, 1);
-
     this.setState({ reminders });
-    chrome.storage.local.set({ reminders }, console.log("chrome.storage.sync.set remove"));
+    chrome.storage.local.set({ reminders }, console.log("chrome.storage.local.set remove"));
   }
 
   render() {
