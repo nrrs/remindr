@@ -7,7 +7,7 @@
     // "icons": {
     //     "16": "favicon.png"
     // },
-    "permissions": ["storage", "alarms", "tabs"],
+    "permissions": ["storage", "alarms", "tabs", "notifications"],
     "background": {
         "scripts": [
             // "background.js"

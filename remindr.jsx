@@ -8,7 +8,6 @@ const Root = () => (
   <App />
 );
 
-
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(<Root />, root);
 });

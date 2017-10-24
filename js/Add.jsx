@@ -51,6 +51,7 @@ class Add extends Component {
               break;
             case "submit":
               this.props.addReminder(this.state.reminder); // update App state
+              this.addAlarm(this.state.reminder); // Add reminder to chrome.alarm
               this.setState({ // reset this.state.reminder
                 reminder: {
                   alert: '',
@@ -64,6 +65,11 @@ class Add extends Component {
         }
       }
     );
+  }
+
+  addAlarm(alarm) {
+    console.log('Alarm Added: ', alarm);
+    chrome.alarms.create("test", { when: Date.now(), periodInMinutes: 1 });
   }
   
   renderInput() {

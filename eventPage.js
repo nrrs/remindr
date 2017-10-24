@@ -11,10 +11,10 @@ chrome.alarms.getAll(obj => console.log('Get Alarms: ', obj));
 /* 
  * Add Listeners
  */
-
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    console.log("Got an alarm!", alarm);
-    alert(`Alarm: ${alarm.name}`);
+    console.log(`Alarm [${Date.now()}]`, alarm);
+    var opt = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
+    notification(opt);
 });
 
 chrome.storage.onChanged.addListener(function(storageObj) {
@@ -26,13 +26,18 @@ chrome.browserAction.onClicked.addListener(function() {
     openOrFocusOptionsPage();
 });
 
-
 /*
  * Helpers
  */
+function notification(opt) {
+    chrome.notifications.create('', opt, () =>
+      console.log("Notification created: ", opt)
+    );
+}
+
 function openOrFocusOptionsPage() {
     const optionsURL = chrome.extension.getURL("options.html");
-    
+
     chrome.tabs.query({}, function(tabs) {
         let found = false;
         // search all tabs for matching optionsURL
