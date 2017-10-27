@@ -24,17 +24,33 @@ class App extends Component {
     let reminders = this.state.reminders;
 
     reminders.push(reminder);
+    
     this.setState({ reminders: reminders });
-    chrome.storage.local.set({ reminders: this.state.reminders }, console.log("chrome.storage.local.set"));
+
+    chrome.storage.local.set(
+      { reminders: this.state.reminders },
+      console.log("chrome.storage.local.set")
+    );
+
+    this.addAlarm(reminder);
+  }
+
+  // chrome.alarms.clear(string name, function callback)
+  addAlarm(alarm) {
+    console.log("Alarm Added: ", alarm);
+    // chrome.alarms.create("test", { when: Date.now(), periodInMinutes: 1 });
   }
 
   removeReminder(id) {
     console.log("remove: ", id);
     let idx = id - 1,
-        reminders = this.state.reminders;
+      reminders = this.state.reminders;
     reminders.splice(idx, 1);
     this.setState({ reminders });
-    chrome.storage.local.set({ reminders }, console.log("chrome.storage.local.set remove"));
+    chrome.storage.local.set(
+      { reminders },
+      console.log("chrome.storage.local.set remove")
+    );
   }
 
   render() {

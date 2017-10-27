@@ -11,104 +11,139 @@ class Add extends Component {
     super(props);
     this.state = {
       reminder: {
-        alert: '',
+        alert: "",
         // when: new Date().toDateInputValue(),
         // when: Date.now(),
-        when: '',
-        frequency: ''
+        when: "",
+        frequency: ""
       },
-      currentInput: 'alert'
+      currentInput: "alert"
     };
     this.update = this.update.bind(this);
     this.submit = this.submit.bind(this);
   }
 
   update(field) {
-      return (e => {
-          const reminder = this.state.reminder;
+    return e => {
+      const reminder = this.state.reminder;
 
-          reminder[field] = e.currentTarget.value;
-          this.setState({ reminder });
-      });
+      reminder[field] = e.currentTarget.value;
+      this.setState({ reminder });
+    };
   }
 
   submit(field) {
-    return ((e) => {
-        if (!e) e = window.event;
-        
-        const keyCode = e.keyCode || e.which;
+    return e => {
+      if (!e) e = window.event;
 
-        if (keyCode == 13) {
-          switch (field) {
-            case "alert":
-              this.setState({ currentInput: "when" });
-              break;
-            case "when":
-              this.setState({ currentInput: "frequency" });
-              break;
-            case "frequency":
-              this.setState({ currentInput: "submit" });
-              break;
-            case "submit":
-              this.props.addReminder(this.state.reminder); // update App state
-              this.addAlarm(this.state.reminder); // Add reminder to chrome.alarm
-              this.setState({ // reset this.state.reminder
-                reminder: {
-                  alert: '',
-                  when: '',
-                  frequency: ''
-                },
-                currentInput: 'alert'
-              });
-              break;
-          }
+      const keyCode = e.keyCode || e.which;
+
+      if (keyCode == 13) {
+        switch (field) {
+          case "alert":
+            this.setState({ currentInput: "when" });
+            break;
+          case "when":
+            this.setState({ currentInput: "frequency" });
+            break;
+          case "frequency":
+            this.setState({ currentInput: "submit" });
+            break;
+          case "submit":
+            this.props.addReminder(this.state.reminder); // update App state
+            this.setState({
+              // reset this.state.reminder
+              reminder: {
+                alert: "",
+                when: "",
+                frequency: ""
+              },
+              currentInput: "alert"
+            });
+            break;
         }
       }
-    );
-  }
-
-  addAlarm(alarm) {
-    console.log('Alarm Added: ', alarm);
-    chrome.alarms.create("test", { when: Date.now(), periodInMinutes: 1 });
+    };
   }
   
+
   renderInput() {
     const { alert, when, frequency } = this.state.reminder;
-    
+
     switch (this.state.currentInput) {
       case "alert":
-        return <input id="alert" type="text" placeholder="Remind me to..." value={alert} onChange={this.update("alert")} onKeyPress={this.submit("alert")} autoFocus />;
+        return (
+          <input
+            id="alert"
+            type="text"
+            placeholder="Remind me to..."
+            value={alert}
+            onChange={this.update("alert")}
+            onKeyPress={this.submit("alert")}
+            autoFocus
+          />
+        );
       case "when":
-        return <div className="label-container">
+        return (
+          <div className="label-container">
             <label>When?</label>
-            <input id="when" type="datetime-local" value={when} onChange={this.update("when")} onKeyPress={this.submit("when")} autoFocus/>
-          </div>;
+            <input
+              id="when"
+              type="datetime-local"
+              value={when}
+              onChange={this.update("when")}
+              onKeyPress={this.submit("when")}
+              autoFocus
+            />
+          </div>
+        );
       case "frequency":
-        return <div className="label-container">
+        return (
+          <div className="label-container">
             <label>How often?</label>
             <div onKeyPress={this.submit("frequency")}>
-              <input type="radio" name="frequency" value="hourly" defaultChecked />
+              <input
+                type="radio"
+                name="frequency"
+                value="hourly"
+                defaultChecked
+              />
               <span>
-                Every <input id="frequency" type="number" placeholder="0" min="0" max="9" value={frequency} onChange={this.update("frequency")} onKeyPress={this.submit("frequency")} autoFocus /> hours.
+                Every{" "}
+                <input
+                  id="frequency"
+                  type="number"
+                  placeholder="0"
+                  min="0"
+                  max="9"
+                  value={frequency}
+                  onChange={this.update("frequency")}
+                  onKeyPress={this.submit("frequency")}
+                  autoFocus
+                />{" "}
+                hours.
               </span>
               <input type="radio" name="frequency" value="daily" />Daily
             </div>
-          </div>;
+          </div>
+        );
       case "submit":
-        return <button className="submit" onKeyPress={this.submit("submit")} autoFocus>
+        return (
+          <button
+            className="submit"
+            onKeyPress={this.submit("submit")}
+            autoFocus
+          >
             Gotcha! Press enter to confirm!
-          </button>;
+          </button>
+        );
     }
   }
 
   render() {
     const { alert } = this.state.reminder;
 
-    return (
-      <div id="add">
-          {this.renderInput()}
-      </div>
-    );
+    return <div id="add">{this.renderInput()}</div>;
   }
 }
 

@@ -2,23 +2,28 @@ console.log('====================================');
 console.log('eventPage.js');
 console.log('====================================');
 
+const reminderKey = 'reminder';
+
 // Get Storage.local
-chrome.storage.local.get(null, obj => console.log('Get Storage.local: ', obj));
+chrome.storage.local.get(null, obj => console.log('Get Storage: ', obj));
 
 // Get Alarms
 chrome.alarms.getAll(obj => console.log('Get Alarms: ', obj));
+
+// Get Notifications
+chrome.notifications.getAll(obj => console.log('Get Notifications: ', obj));
 
 /* 
  * Add Listeners
  */
 chrome.alarms.onAlarm.addListener(function(alarm) {
     console.log(`Alarm [${Date.now()}]`, alarm);
-    var opt = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
-    notification(opt);
+    var notification = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
+    pushNotification(notification);
 });
 
 chrome.storage.onChanged.addListener(function(storageObj) {
-    console.log('Storage updated: ', storageObj.reminders);
+    console.log('Storage Updated: ', storageObj.reminders);
 });
 
 chrome.browserAction.onClicked.addListener(function() {
@@ -26,12 +31,27 @@ chrome.browserAction.onClicked.addListener(function() {
     openOrFocusOptionsPage();
 });
 
+chrome.notifications.onClicked.addListener(function() {
+    console.log('Clicked outside notification close');
+    clearNotification();
+});
+
 /*
  * Helpers
  */
-function notification(opt) {
-    chrome.notifications.create('', opt, () =>
-      console.log("Notification created: ", opt)
+function clearNotification() {
+    chrome.notifications.getAll(items => {
+        if (items) {
+            for (let key in items) {
+                if (key == reminderKey) { chrome.notifications.clear(key); }
+            }
+        }
+    });
+}
+
+function pushNotification(opt) {
+    chrome.notifications.create('remindr', opt, () =>
+      console.log("Notification Created: ", opt)
     );
 }
 

@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,UAAW;EACP,OAAO,EAAE,QAAQ",
-"sources": ["../sass/_core.scss"],
-"names": [],
-"file": "styles.css"
-}
