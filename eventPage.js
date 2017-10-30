@@ -19,6 +19,8 @@ chrome.notifications.getAll(obj => console.log('Get Notifications: ', obj));
 chrome.alarms.onAlarm.addListener(function(alarm) {
     console.log(`Alarm [${Date.now()}]`, alarm);
     var notification = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
+    // if alarm hours are between times set by user then push notification
+    // if not, do nothing;
     pushNotification(notification);
 });
 
