@@ -2,7 +2,18 @@ console.log('====================================');
 console.log('eventPage.js');
 console.log('====================================');
 
-const reminderKey = 'reminder';
+/* global chrome:false */
+
+// Query idle state
+chrome.idle.setDetectionInterval(15);
+
+chrome.idle.queryState(15, function(result) {
+    console.log('idle:', result);
+});
+
+chrome.idle.onStateChanged.addListener(function(state) {
+  console.log(state);
+});
 
 // Get Storage.local
 chrome.storage.local.get(null, obj => console.log('Get Storage: ', obj));
@@ -16,12 +27,49 @@ chrome.notifications.getAll(obj => console.log('Get Notifications: ', obj));
 /* 
  * Add Listeners
  */
+
+// Run alarms if chrome is active
+// function onAlarms() { 
+//     return chrome.alarms.onAlarm.addListener(function(alarm) {
+//         console.log(`Alarm [${Date.now()}]`, alarm);
+//         var notification = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
+//         // if alarm hours are between times set by user then push notification
+//         // if not, do nothing;
+//         var currentTime = new Date().getTime();
+//         var alarmTimePlus = alarm.scheduledTime + 2000;
+//         if (alarmTimePlus > currentTime) {
+//         //   showNotification(); // custom function that runs chrome.notifications.create
+//         isValidAlarm(alarm, notification);
+//         }
+//         // pushNotification(notification);
+//         chrome.notifications.getAll(obj =>
+//         console.log("Get Notifications: ", obj)
+//         );
+//     });
+// }
+
+// chrome.idle.onStateChanged.addListener(function(state) {
+//   if (state == "active") { onAlarms(); }
+// });
+
 chrome.alarms.onAlarm.addListener(function(alarm) {
-    console.log(`Alarm [${Date.now()}]`, alarm);
-    var notification = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
-    // if alarm hours are between times set by user then push notification
-    // if not, do nothing;
-    pushNotification(notification);
+  console.log(`Alarm [${Date.now()}]`, alarm);
+  var notification = {
+    type: "basic",
+    title: "Remindrs!",
+    message: `${alarm.name}`,
+    iconUrl: "./favicon.png"
+  };
+  // if alarm hours are between times set by user then push notification
+  // if not, do nothing;
+  var currentTime = new Date().getTime();
+  var alarmTimePlus = alarm.scheduledTime + 2000;
+  if (alarmTimePlus > currentTime) {
+    //   showNotification(); // custom function that runs chrome.notifications.create
+    isValidAlarm(alarm, notification);
+  }
+  // pushNotification(notification);
+  chrome.notifications.getAll(obj => console.log("Get Notifications: ", obj));
 });
 
 chrome.storage.onChanged.addListener(function(storageObj) {
@@ -34,25 +82,43 @@ chrome.browserAction.onClicked.addListener(function() {
 });
 
 chrome.notifications.onClicked.addListener(function() {
-    console.log('Clicked outside notification close');
     clearNotification();
 });
+
+chrome.notifications.onButtonClicked.addListener(function() {
+    clearNotification();
+});
+
 
 /*
  * Helpers
  */
+function isValidAlarm(alarm, notification) {
+    // Find matches between alarm and storage.
+    // If time is between start and end, push notificiation. Else, dont.
+    chrome.storage.local.get({'reminders' : []}, obj => { 
+        let matches = obj.reminders.filter( reminder => reminder.alert === alarm.name);
+        matches.forEach(match => pushNotification(notification));
+        // if (true) {
+        // } else {
+            // do not push
+        // }
+    });
+    
+}
+
 function clearNotification() {
     chrome.notifications.getAll(items => {
         if (items) {
             for (let key in items) {
-                if (key == reminderKey) { chrome.notifications.clear(key); }
+                if (key.includes('remindr_')) { chrome.notifications.clear(key); }
             }
         }
     });
 }
 
 function pushNotification(opt) {
-    chrome.notifications.create('remindr', opt, () =>
+    chrome.notifications.create(`remindr_${opt.message}`, opt, () =>
       console.log("Notification Created: ", opt)
     );
 }

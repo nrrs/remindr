@@ -10,7 +10,6 @@ class Add extends Component {
       reminder: {
         alert: "",
         when: moment.utc(new Date()).format("YYYY-MM-DDT09:00"),
-        occurEvery: "",
         frequency: "",
         betweenStart: "09:00",
         betweenEnd: "18:00"
@@ -51,14 +50,21 @@ class Add extends Component {
             break;
           case "submit":
             let reminder = this.state.reminder;
-            console.log(reminder);
             reminder.when = moment(reminder.when).utc().valueOf();
+            // reminder.frequency = moment(reminder.frequency * 60).utc().valueOf();
             console.log(reminder);
 
-
-            // this.props.addReminder(this.state.reminder); // handleChange App state
-            this.setState({ // reset this.state.reminder
-              reminder: { alert: "", when: "", onDay: "", atTime: "", occurEvery: "", frequency: "" }, currentInput: "alert" });
+            this.props.addReminder(reminder); // handleChange App state
+            this.setState({
+              reminder: {
+                alert: "",
+                when: moment.utc(new Date()).format("YYYY-MM-DDT09:00"),
+                frequency: "",
+                betweenStart: "09:00",
+                betweenEnd: "18:00"
+              },
+              currentInput: "alert"
+            });
             break;
         }
       }
@@ -81,11 +87,9 @@ class Add extends Component {
         return <div className="label-container">
             <label>How often?</label>
             <div>
-              {/* <input type="radio" name="frequency" value="hourly" defaultChecked /> */}
               <span>
                 Every <input id="frequency" type="number" placeholder="0" min="0" max="9" value={frequency} onChange={this.handleChange("frequency")} onKeyPress={this.handleSubmit("frequency")} autoFocus /> hours.
               </span>
-              {/* <input type="radio" name="frequency" value="daily" />Daily */}
             </div>
           </div>;
       case "between":
@@ -105,8 +109,6 @@ class Add extends Component {
   }
 
   render() {
-    const { alert } = this.state.reminder;
-
     return <div id="add">{this.renderInput()}</div>;
   }
 }

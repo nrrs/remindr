@@ -37,8 +37,10 @@ class App extends Component {
 
   // chrome.alarms.clear(string name, function callback)
   addAlarm(alarm) {
+    console.log('====================================');
     console.log("Alarm Added: ", alarm);
-    // chrome.alarms.create("test", { when: Date.now(), periodInMinutes: 1 });
+    console.log('====================================');
+    chrome.alarms.create(alarm.alert, { when: alarm.when, periodInMinutes: parseInt(alarm.frequency) });
   }
 
   removeReminder(id) {
