@@ -53,23 +53,20 @@ chrome.notifications.getAll(obj => console.log('Get Notifications: ', obj));
 // });
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
-  console.log(`Alarm [${Date.now()}]`, alarm);
+    console.log('Alarm Fired: ', alarm);
+  
   var notification = {
     type: "basic",
     title: "Remindrs!",
     message: `${alarm.name}`,
     iconUrl: "./favicon.png"
   };
-  // if alarm hours are between times set by user then push notification
-  // if not, do nothing;
-  var currentTime = new Date().getTime();
-  var alarmTimePlus = alarm.scheduledTime + 2000;
-  if (alarmTimePlus > currentTime) {
-    //   showNotification(); // custom function that runs chrome.notifications.create
-    isValidAlarm(alarm, notification);
-  }
-  // pushNotification(notification);
-  chrome.notifications.getAll(obj => console.log("Get Notifications: ", obj));
+
+//   chrome.notifications.getAll(res => {
+//       console.log('inside alarm event and notifcition');
+//       console.log('includes remidner', Object.keys(res).includes('remindr'));
+//   });
+  pushNotification(notification);
 });
 
 chrome.storage.onChanged.addListener(function(storageObj) {
@@ -93,20 +90,6 @@ chrome.notifications.onButtonClicked.addListener(function() {
 /*
  * Helpers
  */
-function isValidAlarm(alarm, notification) {
-    // Find matches between alarm and storage.
-    // If time is between start and end, push notificiation. Else, dont.
-    chrome.storage.local.get({'reminders' : []}, obj => { 
-        let matches = obj.reminders.filter( reminder => reminder.alert === alarm.name);
-        matches.forEach(match => pushNotification(notification));
-        // if (true) {
-        // } else {
-            // do not push
-        // }
-    });
-    
-}
-
 function clearNotification() {
     chrome.notifications.getAll(items => {
         if (items) {
@@ -118,9 +101,7 @@ function clearNotification() {
 }
 
 function pushNotification(opt) {
-    chrome.notifications.create(`remindr_${opt.message}`, opt, () =>
-      console.log("Notification Created: ", opt)
-    );
+    chrome.notifications.create(`remindr_${opt.message}`, opt, console.log("Notification Created: ", opt));
 }
 
 function openOrFocusOptionsPage() {

@@ -1,50 +1,48 @@
 import React from 'react';
-
+import Moment from "moment/src/moment";
+window.moment = Moment;
 class ListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             message: ""
         };
-        this.show = this.show.bind(this);
         this.hide = this.hide.bind(this);
     }
     
-    show(message) {
-        this.setState({ message });
+    show(key, message) {
+        console.log('key: ', key);
+        switch(key) {
+            case 'frequency':
+                if (parseInt(message) > 1) {
+                    this.setState({ message: `Every ${message} Minutes`});
+                } else {
+                    this.setState({ message: `Every Minute`});
+                }
+                break;
+            case 'when':
+                let formattedDate = Moment.utc(message).format("ll");
+                this.setState({ message: formattedDate });
+                break;
+            default:
+                this.setState({ message });
+        }
     }
 
-    hide(message) {
+    hide() {
         this.setState({ message: "" });
     }
 
     render() {
         const { id } = this.props;
-        const { alert, reoccur, frequency, onDate } = this.props.reminder;
+        const { alert, when, frequency } = this.props.reminder;
         const { message } = this.state;
 
-        const renderOccur = (reoccur) ?
-            <i className="fa fa-repeat"
-                aria-hidden="true"
-                title={frequency}
-                onMouseOver={() => this.show(frequency)}
-                onMouseLeave={() => this.hide(frequency)}></i> :
-            null;
+        const renderOccur = frequency ? <i className="fa fa-repeat" aria-hidden="true" title={frequency} onMouseOver={() => this.show('frequency', frequency)} onMouseLeave={this.hide} /> : null;
             
-        const renderOnDate = (onDate) ?
-            <i className="fa fa-calendar-check-o"
-                aria-hidden="true"
-                title={onDate}
-                onMouseOver={()=> this.show(onDate)}></i> :
-            null;
+        const renderOnDate = when ? <i className="fa fa-calendar-check-o" aria-hidden="true" title={when} onMouseOver={() => this.show('when', when)} onMouseLeave={this.hide} /> : null;
 
-        const renderRemove = (id) ? 
-            <i className="fa fa-times" 
-                aria-hidden="true" 
-                title="Remove" 
-                onClick={() => this.props.remove(id)}></i> :
-            null;
-
+        const renderRemove = id ? <i className="fa fa-times" aria-hidden="true" title="Remove" onClick={() => this.props.remove(id)}></i> : null;
 
         return (
             <li id={id}>

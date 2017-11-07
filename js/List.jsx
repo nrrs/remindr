@@ -8,13 +8,16 @@ class List extends React.Component {
 
     render() {
         const { data, removeReminder } = this.props;
+
+        let data2 = (Object.keys(data).length < 1) ? [] : Object.keys(data);
+    
         
         return <ul id="reminders">
-            { data.map((el, i) => (
+            { data2.map((el, i) => (
               <ListItem
                 key={i}
                 id={`${i + 1}`}
-                reminder={el}
+                reminder={data[el]}
                 remove={removeReminder}
               />
             )) }
