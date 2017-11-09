@@ -1,6 +1,6 @@
 import React from 'react';
 import Moment from "moment/src/moment";
-window.moment = Moment;
+
 class ListItem extends React.Component {
     constructor(props) {
         super(props);
@@ -11,11 +11,10 @@ class ListItem extends React.Component {
     }
     
     show(key, message) {
-        console.log('key: ', key);
         switch(key) {
             case 'frequency':
                 if (parseInt(message) > 1) {
-                    this.setState({ message: `Every ${message} Minutes`});
+                    this.setState({ message: `Every ${message} Minutes`}); // update minutes to hours app.42 or add.53
                 } else {
                     this.setState({ message: `Every Minute`});
                 }
@@ -42,7 +41,7 @@ class ListItem extends React.Component {
             
         const renderOnDate = when ? <i className="fa fa-calendar-check-o" aria-hidden="true" title={when} onMouseOver={() => this.show('when', when)} onMouseLeave={this.hide} /> : null;
 
-        const renderRemove = id ? <i className="fa fa-times" aria-hidden="true" title="Remove" onClick={() => this.props.remove(id)}></i> : null;
+        const renderRemove = alert ? <i className="fa fa-times" aria-hidden="true" title="Remove" onClick={() => this.props.remove(alert)}></i> : null;
 
         return (
             <li id={id}>

@@ -52,8 +52,6 @@ class Add extends Component {
             let reminder = this.state.reminder;
             reminder.when = moment(reminder.when).utc().valueOf();
             // reminder.frequency = moment(reminder.frequency * 60).utc().valueOf();
-            console.log(reminder);
-
             this.props.addReminder(reminder); // handleChange App state
             this.setState({
               reminder: {

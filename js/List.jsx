@@ -9,11 +9,11 @@ class List extends React.Component {
     render() {
         const { data, removeReminder } = this.props;
 
-        let data2 = (Object.keys(data).length < 1) ? [] : Object.keys(data);
+        let listItems = (Object.keys(data).length < 1) ? [] : Object.keys(data);
     
         
         return <ul id="reminders">
-            { data2.map((el, i) => (
+            { listItems.map((el, i) => (
               <ListItem
                 key={i}
                 id={`${i + 1}`}

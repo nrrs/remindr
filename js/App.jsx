@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Add from './add';
 import List from "./List";
-
+/* global chrome:false */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,11 +13,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    chrome.storage.local.get({ reminders: {} }, results => {
-      this.setState({
-        reminders: results.reminders
-      });
-    });
+    chrome.storage.local.get({ reminders: {} }, results => this.setState({ 
+      reminders: results.reminders 
+    }));
   }
 
   addReminder(reminder) {
@@ -27,38 +25,27 @@ class App extends Component {
     
     this.setState({ reminders: reminders });
 
-    chrome.storage.local.set(
-      { reminders: this.state.reminders },
-      console.log("chrome.storage.local.set")
-    );
+    chrome.storage.local.set({ reminders: this.state.reminders });
 
     this.addAlarm(reminder);
   }
 
-  // chrome.alarms.clear(string name, function callback)
   addAlarm(alarm) {
     chrome.alarms.create(
       alarm.alert, 
-      { when: alarm.when, periodInMinutes: parseInt(alarm.frequency) }
+      { when: alarm.when, periodInMinutes: parseInt(alarm.frequency) } // * 60 for hours
     );
   }
 
-  removeReminder(id) {
-    console.log("remove: ", id);
-    // let idx = id - 1,
-    // reminders.splice(idx, 1);
-    
+  removeReminder(key) {
     let reminders = this.state.reminders;
 
-    console.log(typeof reminders);
-  
-    console.log('LOOK UP HOW TO DELETE KEY-VALUE FROM OBJECT');
-    // this.setState({ reminders });
+    delete reminders[key];
 
-    // chrome.storage.local.set(
-    //   { reminders },
-    //   console.log("chrome.storage.local.set remove")
-    // );
+    this.setState({ reminders });
+
+    chrome.storage.local.set({ reminders });
+    chrome.alarms.clear(key);
   }
 
   render() {
