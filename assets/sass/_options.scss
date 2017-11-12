@@ -45,6 +45,9 @@ input#frequency {
     padding: 0;
     max-height: 600px;
     overflow: scroll;
+    &:-webkit-scrollbar {
+        display: none;
+    }
     li {
         padding: $var;
         border-bottom: 1px solid $border;

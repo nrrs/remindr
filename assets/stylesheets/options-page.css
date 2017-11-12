@@ -122,34 +122,38 @@ input#frequency {
   overflow: scroll;
 }
 /* line 48, ../sass/_options.scss */
+#reminders:-webkit-scrollbar {
+  display: none;
+}
+/* line 51, ../sass/_options.scss */
 #reminders li {
   padding: 15px;
   border-bottom: 1px solid #e6e6e6;
 }
-/* line 51, ../sass/_options.scss */
+/* line 54, ../sass/_options.scss */
 #reminders li:last-child {
   border-bottom: 0px;
 }
-/* line 54, ../sass/_options.scss */
+/* line 57, ../sass/_options.scss */
 #reminders li:hover {
   background: #F0F0F0;
 }
-/* line 57, ../sass/_options.scss */
+/* line 60, ../sass/_options.scss */
 #reminders li .options {
   float: right;
 }
-/* line 60, ../sass/_options.scss */
+/* line 63, ../sass/_options.scss */
 #reminders li .fa {
   color: #ccc;
   margin-left: 15px;
 }
-/* line 63, ../sass/_options.scss */
+/* line 66, ../sass/_options.scss */
 #reminders li .fa:hover {
   color: #aaa;
   cursor: pointer;
 }
 
-/* line 70, ../sass/_options.scss */
+/* line 73, ../sass/_options.scss */
 #credit {
   position: fixed;
   top: 0;
@@ -159,29 +163,29 @@ input#frequency {
   flex-direction: column;
   align-items: center;
 }
-/* line 78, ../sass/_options.scss */
+/* line 81, ../sass/_options.scss */
 #credit a {
   padding: 5px;
   color: #ccc;
 }
-/* line 81, ../sass/_options.scss */
+/* line 84, ../sass/_options.scss */
 #credit a:hover {
   color: #aaa;
 }
 
 @media only screen and (max-width: 500px) {
-  /* line 89, ../sass/_options.scss */
+  /* line 92, ../sass/_options.scss */
   #title strong {
     display: block;
   }
 }
 @media only screen and (max-width: 400px) {
-  /* line 96, ../sass/_options.scss */
+  /* line 99, ../sass/_options.scss */
   #really {
     display: block;
   }
 
-  /* line 99, ../sass/_options.scss */
+  /* line 102, ../sass/_options.scss */
   #title,
   #root {
     display: none;
