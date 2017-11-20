@@ -27,46 +27,17 @@ chrome.notifications.getAll(obj => console.log('Get Notifications: ', obj));
 /* 
  * Add Listeners
  */
-
-// Run alarms if chrome is active
-// function onAlarms() { 
-//     return chrome.alarms.onAlarm.addListener(function(alarm) {
-//         console.log(`Alarm [${Date.now()}]`, alarm);
-//         var notification = { type: "basic", title: "Remindrs!", message: `${alarm.name}`, iconUrl: "./favicon.png" };
-//         // if alarm hours are between times set by user then push notification
-//         // if not, do nothing;
-//         var currentTime = new Date().getTime();
-//         var alarmTimePlus = alarm.scheduledTime + 2000;
-//         if (alarmTimePlus > currentTime) {
-//         //   showNotification(); // custom function that runs chrome.notifications.create
-//         isValidAlarm(alarm, notification);
-//         }
-//         // pushNotification(notification);
-//         chrome.notifications.getAll(obj =>
-//         console.log("Get Notifications: ", obj)
-//         );
-//     });
-// }
-
-// chrome.idle.onStateChanged.addListener(function(state) {
-//   if (state == "active") { onAlarms(); }
-// });
-
 chrome.alarms.onAlarm.addListener(function(alarm) {
     console.log('Alarm Fired: ', alarm);
   
-  var notification = {
-    type: "basic",
-    title: "Remindrs!",
-    message: `${alarm.name}`,
-    iconUrl: "./favicon.png"
-  };
-
-//   chrome.notifications.getAll(res => {
-//       console.log('inside alarm event and notifcition');
-//       console.log('includes remidner', Object.keys(res).includes('remindr'));
-//   });
-  pushNotification(notification);
+    const notification = {
+        type: "basic",
+        title: "Remindrs!",
+        message: `${alarm.name}`,
+        iconUrl: "./favicon.png"
+    };
+    
+    pushNotification(notification);
 });
 
 chrome.storage.onChanged.addListener(function(storageObj) {
