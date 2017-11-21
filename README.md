@@ -1,29 +1,13 @@
 # Remindr
 
-Chrome extension that alerts users at specified times to do what they need to do. We've defaulted with a few that we personally, found quite important.
+Chrome extension that provides notifications for custom reminders.
+
+It utilizes Chrome's API including localStorage, notifications, alarms, and others.
 
 ## Features
 
-### Custom reminders
-- add reminder and notes
-- set time and date
-- set reoccurance
-- snooze 
-
-### Future
-- persisted data
-- auth
-- Real time mindfulness
-
-## Background
+Set a reoccuring or single reminder and receive a custom Chrome notification at the specified time/interval.
 
 ## Technologies
 
-- Node.js
-- React
-- React Native
-- Redux
-- MongoDB
-
-
-## Team
+Built with React and Chrome API
