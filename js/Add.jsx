@@ -4,8 +4,6 @@ import moment from "moment/src/moment";
 class Add extends Component {
   constructor(props) {
     super(props);
-    
-    
     this.state = {
       reminder: {
         alert: "",
