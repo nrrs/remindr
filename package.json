@@ -4,7 +4,7 @@
     "description": "Remindr is a Chrome Extension aimed to provide users with custom reminders.",
     "main": "webpack.config.js",
     "repository": "https://github.com/nrrs/remindr.git",
-    "author": "Norris Kwan (norris.kwan@gmail.com) Justin Austria (juaustria@gmail.com)",
+    "author": "Norris Kwan (norris.kwan@gmail.com)",
     "license": "MIT",
     "scripts": {
         "start": "webpack --watch"
