@@ -11,3 +11,7 @@ Set a reoccuring or single reminder and receive a custom Chrome notification at 
 ## Technologies
 
 Built with React and Chrome API
+
+## Todo
+
+Update Node, dependencies, and refactor
